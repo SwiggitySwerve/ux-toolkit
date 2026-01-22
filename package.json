@@ -30,6 +30,7 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./package.json": "./package.json",
     "./skills/*": "./skills/*",
     "./agents/*": "./agents/*",
     "./commands/*": "./commands/*"
