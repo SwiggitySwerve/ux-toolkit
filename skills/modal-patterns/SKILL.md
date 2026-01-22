@@ -725,19 +725,26 @@ const closeModal = () => {
 
 ## Audit Checklist for Modals
 
-- [ ] Has clear title describing action
-- [ ] Has close button (X) in header
-- [ ] Closes on Escape key
-- [ ] Closes on backdrop click (unless editing)
-- [ ] Traps focus within modal
-- [ ] Returns focus to trigger on close
-- [ ] Body scroll is locked when open
-- [ ] Has proper ARIA attributes
-- [ ] Confirmation modals show item name
-- [ ] Delete modals have warning styling
-- [ ] Edit modals reset on open
-- [ ] Edit modals warn about unsaved changes
-- [ ] Loading states disable all actions
+### Critical (Must Fix)
+- [ ] Traps focus within modal - accessibility violation, focus escapes
+- [ ] Closes on Escape key - accessibility violation
+- [ ] Has proper ARIA attributes (role, aria-modal, aria-labelledby) - screen readers can't announce
+- [ ] Returns focus to trigger on close - focus gets lost
+
+### Major (Should Fix)
+- [ ] Has clear title describing action - users confused about context
+- [ ] Has close button (X) in header - no obvious way to dismiss
+- [ ] Body scroll is locked when open - background scrolls unexpectedly
+- [ ] Confirmation modals show item name - users unsure what they're deleting
+- [ ] Delete modals have warning styling - destructive action not obvious
+- [ ] Edit modals warn about unsaved changes - data loss risk
+- [ ] Loading states disable all actions - double submissions
+
+### Minor (Nice to Have)
+- [ ] Closes on backdrop click (unless editing) - convenience
+- [ ] Edit modals reset on open - stale data visible briefly
+- [ ] Footer buttons are right-aligned - consistency
+- [ ] Primary action matches intent (danger for delete) - visual clarity
 - [ ] Footer buttons are right-aligned
 - [ ] Cancel is secondary/ghost style
 - [ ] Primary action matches intent (danger for delete)

@@ -4,11 +4,11 @@ AI-powered UI/UX review toolkit with skills, agents, and commands for OpenCode a
 
 ## Features
 
-- **Skills**: Reusable UX knowledge (heuristics, accessibility, design systems)
-- **Agents**: Specialized AI assistants for UX audits and fixes
+- **18 Skills**: Comprehensive UX knowledge from heuristics to drag-drop patterns
+- **14 Agents**: Specialized reviewers for different page types (list, detail, editor, comparison, settings)
 - **Commands**: Quick-trigger UX workflows
-- **Framework-agnostic**: Works with React, Vue, Svelte, vanilla JS
-- **React-optimized**: Deep React/Next.js patterns included
+- **Severity Weights**: All checklists categorized as Critical/Major/Minor
+- **Parallel Review**: Dispatch multiple specialized agents simultaneously
 
 ## Quick Start
 
@@ -30,19 +30,53 @@ This installs to `.opencode/` in your current directory.
 
 ## What's Included
 
-### Skills
+### Skills (18)
 
+#### Core UX
 | Skill | Description |
 |-------|-------------|
 | `ux-heuristics` | Nielsen's 10 usability heuristics with evaluation methodology |
 | `wcag-accessibility` | WCAG 2.2 compliance checklist and ARIA patterns |
 | `visual-design-system` | Layout, typography, color theory, spacing systems |
 | `interaction-patterns` | Micro-interactions, loading states, feedback mechanisms |
-| `react-ux-patterns` | React/Next.js specific UX patterns |
 | `mobile-responsive-ux` | Touch targets, gestures, responsive patterns |
 
-### Agents
+#### Page Structure
+| Skill | Description |
+|-------|-------------|
+| `page-structure-patterns` | Base requirements for page states, layout, and structure |
+| `list-page-patterns` | Filters, sorting, pagination, and grid/table displays |
+| `detail-page-patterns` | Headers, tabs, multi-column layouts, related data |
+| `navigation-patterns` | Sidebar, mobile drawer, breadcrumbs, app shell |
 
+#### Components
+| Skill | Description |
+|-------|-------------|
+| `modal-patterns` | Confirmation, edit, selector, and wizard modals |
+| `form-patterns` | Validation, field layouts, multi-step wizards |
+| `data-density-patterns` | Dense layouts, z-index, overflow, readability |
+| `toast-notification-patterns` | Toast types, timing, queuing, accessibility |
+
+#### Interactions
+| Skill | Description |
+|-------|-------------|
+| `keyboard-shortcuts-patterns` | Command palette (Cmd+K), shortcut registry |
+| `drag-drop-patterns` | Drag preview, drop zones, keyboard alternatives |
+
+#### Editor/Workspace
+| Skill | Description |
+|-------|-------------|
+| `editor-workspace-patterns` | Multi-tab editors, dirty state, undo/redo, auto-save |
+| `comparison-patterns` | Side-by-side comparison, diff highlighting |
+
+#### Framework
+| Skill | Description |
+|-------|-------------|
+| `react-ux-patterns` | React/Next.js specific UX patterns |
+
+### Agents (14)
+
+#### General Purpose
 | Agent | Mode | Description |
 |-------|------|-------------|
 | `ux-auditor` | Analysis | Full UX audit against heuristics (read-only) |
@@ -51,6 +85,22 @@ This installs to `.opencode/` in your current directory.
 | `accessibility-engineer` | Fix | Accessibility fixes |
 | `visual-reviewer` | Analysis | Design system consistency check |
 | `interaction-reviewer` | Analysis | Micro-interactions and feedback review |
+
+#### Specialized Page Reviewers
+| Agent | Mode | Description |
+|-------|------|-------------|
+| `list-page-reviewer` | Analysis | List/browse page UX review |
+| `detail-page-reviewer` | Analysis | Detail/entity page UX review |
+| `navigation-reviewer` | Analysis | Navigation and routing review |
+| `form-reviewer` | Analysis | Form and input UX review |
+| `density-reviewer` | Analysis | Data density and layout review |
+
+#### Advanced Specialized Reviewers
+| Agent | Mode | Description |
+|-------|------|-------------|
+| `editor-reviewer` | Analysis | Editor/workspace UI with multi-tab, drag-drop |
+| `comparison-reviewer` | Analysis | Side-by-side comparison and diff UIs |
+| `settings-reviewer` | Analysis | Settings, preferences, and configuration pages |
 
 ### Commands
 
@@ -74,6 +124,23 @@ This installs to `.opencode/` in your current directory.
 
 # Invoke agent directly
 @ux-auditor Review the login flow for usability issues
+
+# Use specialized reviewer for a list page
+@list-page-reviewer Review /users page against list-page-patterns
+
+# Use editor reviewer for complex workspace
+@editor-reviewer Review the Customizer page for editor patterns
+```
+
+### Parallel Review (Recommended)
+
+For comprehensive review, dispatch multiple specialized agents:
+
+```bash
+# In your AI assistant, dispatch these in parallel:
+@list-page-reviewer Review /items page
+@navigation-reviewer Review sidebar navigation  
+@density-reviewer Review dashboard layout
 ```
 
 ### With Playwright MCP
@@ -91,6 +158,16 @@ For visual inspection capabilities, add Playwright MCP to your config:
   }
 }
 ```
+
+## Severity Weights
+
+All audit checklists use severity weights to help prioritize fixes:
+
+| Severity | Meaning | Action |
+|----------|---------|--------|
+| **[CRITICAL]** | Accessibility violation, data loss risk, users blocked | Must fix before release |
+| **[MAJOR]** | Significant UX problems, confusion, inefficiency | Should fix soon |
+| **[MINOR]** | Polish items, nice-to-have improvements | Fix when time permits |
 
 ## Manual Installation
 

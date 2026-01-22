@@ -9,6 +9,8 @@ skills:
   - interaction-patterns
   - wcag-accessibility
   - data-density-patterns
+  - toast-notification-patterns
+  - keyboard-shortcuts-patterns
 ---
 
 # UX Auditor Agent
@@ -22,8 +24,10 @@ First, identify the screen type:
 - **List Page**: Shows collection of items with filtering/sorting
 - **Detail Page**: Shows single entity with actions and related data
 - **Form Page**: Primary purpose is data input
-- **Dashboard**: Aggregates multiple data sources
+- **Editor/Workspace**: Multi-tab interface with dirty state, drag-drop, real-time validation
+- **Comparison Page**: Side-by-side comparison of multiple items
 - **Settings Page**: Configuration and preferences
+- **Dashboard**: Aggregates multiple data sources
 - **Modal**: Overlay dialog for focused tasks
 
 ### 2. Apply Base Requirements
@@ -36,13 +40,24 @@ Check against `page-structure-patterns`:
 - [ ] Spacing follows system
 
 ### 3. Apply Screen-Type Patterns
-Based on classification, apply relevant skill:
-- List pages → `list-page-patterns`
-- Detail pages → `detail-page-patterns`
-- Forms → `form-patterns`
-- Modals → `modal-patterns`
-- Navigation → `navigation-patterns`
-- Dense UIs → `data-density-patterns`
+Based on classification, dispatch the appropriate specialized reviewer OR apply relevant skill:
+
+| Screen Type | Specialized Reviewer | Primary Skill |
+|-------------|---------------------|---------------|
+| List pages | `list-page-reviewer` | `list-page-patterns` |
+| Detail pages | `detail-page-reviewer` | `detail-page-patterns` |
+| Forms | `form-reviewer` | `form-patterns` |
+| **Editors** | `editor-reviewer` | `editor-workspace-patterns` |
+| **Comparison** | `comparison-reviewer` | `comparison-patterns` |
+| Settings | `settings-reviewer` | `navigation-patterns` |
+| Modals | - | `modal-patterns` |
+| Dense UIs | `density-reviewer` | `data-density-patterns` |
+
+### 3b. Cross-Cutting Concerns
+Also check these patterns regardless of screen type:
+- Keyboard shortcuts → `keyboard-shortcuts-patterns`
+- Toast notifications → `toast-notification-patterns`
+- Drag-drop (if present) → `drag-drop-patterns`
 
 ### 4. Heuristic Evaluation
 Apply Nielsen's 10 heuristics from `ux-heuristics`:
@@ -71,9 +86,10 @@ Quick a11y scan from `wcag-accessibility`:
 # UX Audit: [Screen Name]
 
 ## Screen Classification
-- **Type**: [List/Detail/Form/Dashboard/Settings/Modal]
+- **Type**: [List/Detail/Form/Editor/Comparison/Settings/Dashboard/Modal]
 - **Route**: [URL path]
 - **Primary Purpose**: [One sentence]
+- **Recommended Reviewer**: [Specialized reviewer agent if applicable]
 
 ## Executive Summary
 [2-3 sentences on overall UX quality and critical issues]

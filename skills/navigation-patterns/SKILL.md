@@ -451,3 +451,26 @@ function useHashNavigation(sections: string[]) {
 - Support keyboard navigation (Tab, Enter, Escape)
 - Announce state changes to screen readers
 - Use semantic HTML (nav, ul, li)
+
+## Audit Checklist for Navigation
+
+### Critical (Must Fix)
+- [ ] All main sections have nav items - users can't find features
+- [ ] Active state is clear - users don't know where they are
+- [ ] Mobile navigation accessible - mobile users blocked
+- [ ] Keyboard navigable (Tab, Enter) - accessibility violation
+- [ ] Uses semantic HTML (nav element) - accessibility violation
+
+### Major (Should Fix)
+- [ ] Icons are recognizable - confusion about meaning
+- [ ] Tooltips when collapsed - can't identify items
+- [ ] Mobile drawer closes on navigation - users get stuck
+- [ ] Breadcrumbs on nested pages - users lose context
+- [ ] URL updates reflect navigation state - can't share deep links
+- [ ] Active detection works for nested routes - wrong item highlighted
+
+### Minor (Nice to Have)
+- [ ] Collapse state persisted to localStorage - convenience
+- [ ] Section dividers group related items - visual organization
+- [ ] Animations are smooth (<300ms) - polish
+- [ ] Footer shows version/links - helpful info
