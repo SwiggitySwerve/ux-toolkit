@@ -14,13 +14,13 @@
     "ai-agents",
     "mcp"
   ],
-  "homepage": "https://github.com/swiggityswerve/ux-toolkit#readme",
+  "homepage": "https://github.com/SwiggitySwerve/ux-toolkit#readme",
   "bugs": {
-    "url": "https://github.com/swiggityswerve/ux-toolkit/issues"
+    "url": "https://github.com/SwiggitySwerve/ux-toolkit/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/swiggityswerve/ux-toolkit.git"
+    "url": "git+https://github.com/SwiggitySwerve/ux-toolkit.git"
   },
   "license": "MIT",
   "author": "swiggityswerve",
