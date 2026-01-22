@@ -64,6 +64,35 @@ export const SKILLS = [
     description: 'Dense layouts, z-index, overflow, readability',
     category: 'component',
   },
+  {
+    name: 'toast-notification-patterns',
+    description: 'Toast notifications, alerts, and system feedback',
+    category: 'component',
+  },
+
+  // Interaction Skills
+  {
+    name: 'keyboard-shortcuts-patterns',
+    description: 'Keyboard shortcuts, command palette (Cmd+K), power user navigation',
+    category: 'interaction',
+  },
+  {
+    name: 'drag-drop-patterns',
+    description: 'Drag and drop interactions, visual feedback, drop zones',
+    category: 'interaction',
+  },
+
+  // Editor/Workspace Skills
+  {
+    name: 'editor-workspace-patterns',
+    description: 'Multi-tab editors, dirty state, real-time validation, workspaces',
+    category: 'editor',
+  },
+  {
+    name: 'comparison-patterns',
+    description: 'Side-by-side comparison, diff highlighting, multi-item comparison',
+    category: 'editor',
+  },
 
   // Framework Skills
   {
@@ -106,7 +135,7 @@ export const AGENTS = [
     mode: 'analysis',
   },
 
-  // Specialized Page Reviewers (for parallel dispatch)
+  // Specialized Page Reviewers
   {
     name: 'list-page-reviewer',
     description: 'List/browse page UX review',
@@ -130,6 +159,23 @@ export const AGENTS = [
   {
     name: 'density-reviewer',
     description: 'Data density and layout review',
+    mode: 'analysis',
+  },
+
+  // Advanced Specialized Reviewers
+  {
+    name: 'editor-reviewer',
+    description: 'Editor/workspace UI with multi-tab, drag-drop, validation',
+    mode: 'analysis',
+  },
+  {
+    name: 'comparison-reviewer',
+    description: 'Side-by-side comparison and diff UIs',
+    mode: 'analysis',
+  },
+  {
+    name: 'settings-reviewer',
+    description: 'Settings, preferences, and configuration pages',
     mode: 'analysis',
   },
 ] as const;

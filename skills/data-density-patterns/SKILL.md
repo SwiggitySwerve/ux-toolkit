@@ -466,32 +466,28 @@ const densityClasses = {
 
 ## Audit Checklist for Dense UIs
 
-### Overlap Prevention
-- [ ] Z-index values follow established scale
-- [ ] Fixed elements don't overlap scrollable content
-- [ ] Dropdowns/popovers don't get clipped
-- [ ] Modals/dialogs appear above all content
+### Critical (Must Fix)
+- [ ] Z-index values follow established scale - elements hidden/overlapping
+- [ ] Modals/dialogs appear above all content - blocked interactions
+- [ ] All content accessible via scroll - data inaccessible
+- [ ] Text meets minimum size (12px body, 10px labels) - unreadable
+- [ ] Sufficient contrast ratios maintained - accessibility violation
 
-### Off-Screen Prevention
-- [ ] All content accessible via scroll
-- [ ] No horizontal scroll unless intentional (tables)
-- [ ] Tooltips/popovers stay within viewport
-- [ ] Mobile safe areas respected
+### Major (Should Fix)
+- [ ] Fixed elements don't overlap scrollable content - content hidden
+- [ ] Dropdowns/popovers don't get clipped - unusable controls
+- [ ] No horizontal scroll unless intentional (tables) - poor mobile UX
+- [ ] Tooltips/popovers stay within viewport - information cut off
+- [ ] Mobile safe areas respected - notch/home bar overlap
+- [ ] Adequate spacing between elements - hard to tap/click
+- [ ] Long lists are virtualized (100+ items) - performance issues
+- [ ] No layout shift during loading - disorienting jumps
 
-### Readability
-- [ ] Text meets minimum size (12px body, 10px labels)
-- [ ] Sufficient contrast ratios maintained
-- [ ] Line height appropriate for text size
-- [ ] Adequate spacing between elements
-
-### Navigation
-- [ ] Jump navigation for long pages
-- [ ] Section headers are sticky
-- [ ] Current section is highlighted
-- [ ] Scroll position preserved on back navigation
-
-### Performance
-- [ ] Long lists are virtualized (100+ items)
-- [ ] Images are lazy loaded
-- [ ] Animations are reduced in dense areas
-- [ ] No layout shift during loading
+### Minor (Nice to Have)
+- [ ] Line height appropriate for text size - readability polish
+- [ ] Jump navigation for long pages - convenience
+- [ ] Section headers are sticky - navigation convenience
+- [ ] Current section is highlighted - orientation
+- [ ] Scroll position preserved on back navigation - continuity
+- [ ] Images are lazy loaded - performance optimization
+- [ ] Animations are reduced in dense areas - performance polish

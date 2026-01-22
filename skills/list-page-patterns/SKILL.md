@@ -330,17 +330,22 @@ const hasAdvancedFilters = filters.dateMin || filters.dateMax || filters.valueMi
 
 ## Audit Checklist for List Pages
 
-- [ ] Has search input with aria-label
-- [ ] Has relevant filter dropdowns
-- [ ] Shows results count
-- [ ] Indicates when filters are active
-- [ ] Has clear filters button
-- [ ] Handles empty filtered results
-- [ ] Handles empty initial state
-- [ ] Grid is responsive (1-4 columns)
-- [ ] Cards have hover states
-- [ ] Table has sortable headers (if using table)
-- [ ] Pagination works correctly
-- [ ] Loading state while fetching
-- [ ] Create button in header
-- [ ] Cards link to detail pages
+### Critical (Must Fix)
+- [ ] Has search input with aria-label - accessibility violation
+- [ ] Handles empty initial state - users see nothing, think app is broken
+- [ ] Loading state while fetching - users think app froze
+- [ ] Cards link to detail pages - dead end without navigation
+
+### Major (Should Fix)  
+- [ ] Has relevant filter dropdowns - can't find items efficiently
+- [ ] Shows results count - users don't know if search worked
+- [ ] Handles empty filtered results - confusing when no matches
+- [ ] Grid is responsive (1-4 columns) - mobile users blocked
+- [ ] Pagination works correctly - can't access all data
+- [ ] Create button in header - no clear path to add items
+
+### Minor (Nice to Have)
+- [ ] Indicates when filters are active - visual clarity
+- [ ] Has clear filters button - convenience
+- [ ] Cards have hover states - interaction feedback
+- [ ] Table has sortable headers (if using table) - power user feature

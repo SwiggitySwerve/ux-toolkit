@@ -500,18 +500,23 @@ function InlineEditField({ value, onSave, label }) {
 
 ## Audit Checklist for Detail Pages
 
-- [ ] Has back navigation to parent list
-- [ ] Has appropriate header actions (Edit, Delete)
-- [ ] Delete has confirmation step
-- [ ] Uses tabs for multiple content sections
-- [ ] Tabs sync with URL (shareable)
-- [ ] Multi-column layout on desktop
-- [ ] Stacks to single column on mobile
-- [ ] Summary card with key stats
-- [ ] Metadata displayed in scannable format
-- [ ] Related items show count and "view all"
-- [ ] Empty states for sections with no data
-- [ ] Loading states for async sections
-- [ ] Collapsible sections where appropriate
-- [ ] Timeline for history/activity
-- [ ] Edit flows are clear (inline vs modal)
+### Critical (Must Fix)
+- [ ] Has back navigation to parent list - users get trapped
+- [ ] Delete has confirmation step - data loss risk
+- [ ] Stacks to single column on mobile - mobile users blocked
+- [ ] Loading states for async sections - appears broken
+
+### Major (Should Fix)
+- [ ] Has appropriate header actions (Edit, Delete) - no way to modify
+- [ ] Uses tabs for multiple content sections - overwhelming without organization
+- [ ] Tabs sync with URL (shareable) - can't share specific views
+- [ ] Multi-column layout on desktop - wasted space
+- [ ] Summary card with key stats - key info not visible
+- [ ] Empty states for sections with no data - confusing gaps
+
+### Minor (Nice to Have)
+- [ ] Metadata displayed in scannable format - readability
+- [ ] Related items show count and "view all" - navigation convenience
+- [ ] Collapsible sections where appropriate - information density
+- [ ] Timeline for history/activity - context for changes
+- [ ] Edit flows are clear (inline vs modal) - consistency

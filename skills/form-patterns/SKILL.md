@@ -586,18 +586,23 @@ function WizardForm<T>({
 
 ## Audit Checklist for Forms
 
-- [ ] All fields have visible labels
-- [ ] Required fields are marked
-- [ ] Error messages are clear and specific
-- [ ] Errors appear next to relevant field
-- [ ] Validation timing is appropriate
-- [ ] Form has loading state during submission
-- [ ] Success/error feedback after submission
-- [ ] Cancel button doesn't submit form
-- [ ] Keyboard navigation works (Tab, Enter)
-- [ ] Form can be submitted with Enter key
-- [ ] Long forms are sectioned or multi-step
-- [ ] Password fields have visibility toggle
-- [ ] Autofill attributes are correct
-- [ ] Form resets properly after submission
-- [ ] Dirty state tracked for unsaved changes warning
+### Critical (Must Fix)
+- [ ] All fields have visible labels - accessibility violation
+- [ ] Error messages are clear and specific - users can't fix issues
+- [ ] Errors appear next to relevant field - users can't find problems
+- [ ] Keyboard navigation works (Tab, Enter) - accessibility violation
+- [ ] Form can be submitted with Enter key - accessibility violation
+
+### Major (Should Fix)
+- [ ] Required fields are marked - users submit incomplete forms
+- [ ] Validation timing is appropriate - frustrating UX
+- [ ] Form has loading state during submission - users double-submit
+- [ ] Success/error feedback after submission - users don't know outcome
+- [ ] Cancel button doesn't submit form - data loss risk
+- [ ] Dirty state tracked for unsaved changes warning - data loss risk
+
+### Minor (Nice to Have)
+- [ ] Long forms are sectioned or multi-step - cognitive load
+- [ ] Password fields have visibility toggle - convenience
+- [ ] Autofill attributes are correct - convenience
+- [ ] Form resets properly after submission - edge case handling

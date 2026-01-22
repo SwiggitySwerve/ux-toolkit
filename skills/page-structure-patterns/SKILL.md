@@ -252,15 +252,20 @@ function Page() {
 
 When reviewing ANY page, verify:
 
-- [ ] Has loading state
-- [ ] Has error state with recovery path
-- [ ] Has empty state (if applicable)
-- [ ] Uses PageLayout wrapper
-- [ ] Has appropriate title/subtitle
-- [ ] Has back navigation (if detail page)
-- [ ] Header actions follow guidelines
-- [ ] Responsive at all breakpoints
-- [ ] Follows typography hierarchy
-- [ ] Uses semantic colors correctly
-- [ ] Meets ARIA requirements
-- [ ] Keyboard navigable
+### Critical (Must Fix)
+- [ ] Has loading state - users see blank/broken page without it
+- [ ] Has error state with recovery path - users get stuck without it
+- [ ] Meets ARIA requirements - accessibility violation
+- [ ] Keyboard navigable - accessibility violation
+
+### Major (Should Fix)
+- [ ] Has empty state (if applicable) - confusing without guidance
+- [ ] Uses PageLayout wrapper - inconsistent experience
+- [ ] Has appropriate title/subtitle - navigation confusion
+- [ ] Has back navigation (if detail page) - users get trapped
+- [ ] Responsive at all breakpoints - mobile users blocked
+
+### Minor (Nice to Have)
+- [ ] Header actions follow guidelines - consistency
+- [ ] Follows typography hierarchy - visual polish
+- [ ] Uses semantic colors correctly - visual polish
