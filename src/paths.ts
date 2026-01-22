@@ -1,11 +1,57 @@
 import { homedir } from 'node:os';
-import { join, dirname } from 'node:path';
+import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+// Get the directory of the current module
+// Works in both ESM and CJS contexts
+function getCurrentDirname(): string {
+  // Try ESM approach first (import.meta.url)
+  try {
+    if (import.meta?.url) {
+      return dirname(fileURLToPath(import.meta.url));
+    }
+  } catch {
+    // ESM approach failed
+  }
+  
+  // CJS approach: resolve the package from node_modules
+  // When bundled, we can find the package root by looking up
+  // the package.json location using require.resolve
+  try {
+    // This works because package.json is always at the package root
+    const packageJsonPath = require.resolve('ux-toolkit/package.json');
+    // Return the dist directory (to match ESM behavior where import.meta.url points to dist/)
+    return join(dirname(packageJsonPath), 'dist');
+  } catch {
+    // Package not found in node_modules
+  }
+  
+  // Fallback: Use process.cwd() and check if we're in the package directory
+  // This handles the case when running from the package source directory
+  const cwd = process.cwd();
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const fs = require('node:fs');
+    const pkgPath = resolve(cwd, 'package.json');
+    if (fs.existsSync(pkgPath)) {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const pkg = require(pkgPath);
+      if (pkg.name === 'ux-toolkit') {
+        return resolve(cwd, 'dist');
+      }
+    }
+  } catch {
+    // Failed to read package.json
+  }
+  
+  // Last resort: assume we're running from dist folder in cwd
+  return resolve(cwd, 'dist');
+}
+
+const currentDirname = getCurrentDirname();
 
 export function getPackageRoot(): string {
-  return join(__dirname, '..');
+  return join(currentDirname, '..');
 }
 
 export function getSkillPath(skillName: string): string {
