@@ -25,13 +25,10 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Debug OIDC
-        run: |
-          echo "ACTIONS_ID_TOKEN_REQUEST_URL: $ACTIONS_ID_TOKEN_REQUEST_URL"
-          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
-          echo "GITHUB_WORKFLOW: $GITHUB_WORKFLOW"
-          echo "GITHUB_REF: $GITHUB_REF"
-          npm config list
+      - name: Clear token config for OIDC
+        run: npm config delete //registry.npmjs.org/:_authToken
 
       - name: Publish to NPM
         run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ''
