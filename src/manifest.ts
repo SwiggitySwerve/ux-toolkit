@@ -217,6 +217,28 @@ export const AGENTS = [
     description: 'Settings, preferences, and configuration pages',
     mode: 'analysis',
   },
+
+  // Game & Interactive Reviewers
+  {
+    name: 'game-ui-reviewer',
+    description: 'Tactical maps, turn-based combat, status displays, hex grids',
+    mode: 'analysis',
+  },
+  {
+    name: 'replay-reviewer',
+    description: 'Playback controls, timeline scrubbing, event feeds',
+    mode: 'analysis',
+  },
+  {
+    name: 'card-reviewer',
+    description: 'Info cards, stat blocks, entity displays with density levels',
+    mode: 'analysis',
+  },
+  {
+    name: 'panel-reviewer',
+    description: 'Resizable panels, collapsible sidebars, split views',
+    mode: 'analysis',
+  },
 ] as const;
 
 export const COMMANDS = [

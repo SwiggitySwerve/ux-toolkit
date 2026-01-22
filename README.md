@@ -4,8 +4,8 @@ AI-powered UI/UX review toolkit with skills, agents, and commands for OpenCode a
 
 ## Features
 
-- **18 Skills**: Comprehensive UX knowledge from heuristics to drag-drop patterns
-- **14 Agents**: Specialized reviewers for different page types (list, detail, editor, comparison, settings)
+- **25 Skills**: Comprehensive UX knowledge from heuristics to game UI patterns
+- **18 Agents**: Specialized reviewers for different page types (list, detail, editor, game, replay, cards)
 - **Commands**: Quick-trigger UX workflows
 - **Severity Weights**: All checklists categorized as Critical/Major/Minor
 - **Parallel Review**: Dispatch multiple specialized agents simultaneously
@@ -30,7 +30,7 @@ This installs to `.opencode/` in your current directory.
 
 ## What's Included
 
-### Skills (18)
+### Skills (25)
 
 #### Core UX
 | Skill | Description |
@@ -68,13 +68,28 @@ This installs to `.opencode/` in your current directory.
 |-------|-------------|
 | `editor-workspace-patterns` | Multi-tab editors, dirty state, undo/redo, auto-save |
 | `comparison-patterns` | Side-by-side comparison, diff highlighting |
+| `split-panel-patterns` | Resizable panels, dividers, collapsible sidebars |
+
+#### Game/Interactive
+| Skill | Description |
+|-------|-------------|
+| `canvas-grid-patterns` | Hex grids, tactical maps, pan/zoom, tokens, coordinates |
+| `turn-based-ui-patterns` | Phase banners, turn indicators, action bars, game state |
+| `playback-replay-patterns` | VCR controls, timeline scrubbing, speed selection |
+| `status-visualization-patterns` | Health bars, progress meters, heat gauges, pip displays |
+
+#### Data Display
+| Skill | Description |
+|-------|-------------|
+| `info-card-patterns` | Compact/standard/expanded cards, stat blocks, badges |
+| `event-timeline-patterns` | Activity feeds, audit logs, chronological events |
 
 #### Framework
 | Skill | Description |
 |-------|-------------|
 | `react-ux-patterns` | React/Next.js specific UX patterns |
 
-### Agents (14)
+### Agents (18)
 
 #### General Purpose
 | Agent | Mode | Description |
@@ -101,6 +116,14 @@ This installs to `.opencode/` in your current directory.
 | `editor-reviewer` | Analysis | Editor/workspace UI with multi-tab, drag-drop |
 | `comparison-reviewer` | Analysis | Side-by-side comparison and diff UIs |
 | `settings-reviewer` | Analysis | Settings, preferences, and configuration pages |
+
+#### Game & Interactive Reviewers
+| Agent | Mode | Description |
+|-------|------|-------------|
+| `game-ui-reviewer` | Analysis | Tactical maps, turn-based combat, hex grids, status displays |
+| `replay-reviewer` | Analysis | Playback controls, timeline scrubbing, event feeds |
+| `card-reviewer` | Analysis | Info cards, stat blocks, entity displays with density levels |
+| `panel-reviewer` | Analysis | Resizable panels, collapsible sidebars, split views |
 
 ### Commands
 
@@ -130,6 +153,12 @@ This installs to `.opencode/` in your current directory.
 
 # Use editor reviewer for complex workspace
 @editor-reviewer Review the Customizer page for editor patterns
+
+# Use game reviewer for tactical interfaces
+@game-ui-reviewer Review the combat screen for grid and turn-based patterns
+
+# Use replay reviewer for playback interfaces
+@replay-reviewer Review the game replay viewer
 ```
 
 ### Parallel Review (Recommended)
