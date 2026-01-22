@@ -1,4 +1,5 @@
 export const SKILLS = [
+  // Core UX Skills
   {
     name: 'ux-heuristics',
     description: "Nielsen's 10 usability heuristics with evaluation methodology",
@@ -20,18 +21,60 @@ export const SKILLS = [
     category: 'core',
   },
   {
-    name: 'react-ux-patterns',
-    description: 'React/Next.js specific UX patterns',
-    category: 'framework',
-  },
-  {
     name: 'mobile-responsive-ux',
     description: 'Touch targets, gestures, responsive patterns',
     category: 'core',
   },
+
+  // Page Structure Skills
+  {
+    name: 'page-structure-patterns',
+    description: 'Base requirements for page states, layout, and structure',
+    category: 'structure',
+  },
+  {
+    name: 'list-page-patterns',
+    description: 'Filters, sorting, pagination, and grid/table displays',
+    category: 'structure',
+  },
+  {
+    name: 'detail-page-patterns',
+    description: 'Headers, tabs, multi-column layouts, related data',
+    category: 'structure',
+  },
+  {
+    name: 'navigation-patterns',
+    description: 'Sidebar, mobile drawer, breadcrumbs, app shell',
+    category: 'structure',
+  },
+
+  // Component Skills
+  {
+    name: 'modal-patterns',
+    description: 'Confirmation, edit, selector, and wizard modals',
+    category: 'component',
+  },
+  {
+    name: 'form-patterns',
+    description: 'Validation, field layouts, multi-step wizards',
+    category: 'component',
+  },
+  {
+    name: 'data-density-patterns',
+    description: 'Dense layouts, z-index, overflow, readability',
+    category: 'component',
+  },
+
+  // Framework Skills
+  {
+    name: 'react-ux-patterns',
+    description: 'React/Next.js specific UX patterns',
+    category: 'framework',
+  },
 ] as const;
 
 export const AGENTS = [
+  // General Purpose Agents
   {
     name: 'ux-auditor',
     description: 'Full UX audit against heuristics (read-only)',
@@ -60,6 +103,33 @@ export const AGENTS = [
   {
     name: 'interaction-reviewer',
     description: 'Micro-interactions and feedback review',
+    mode: 'analysis',
+  },
+
+  // Specialized Page Reviewers (for parallel dispatch)
+  {
+    name: 'list-page-reviewer',
+    description: 'List/browse page UX review',
+    mode: 'analysis',
+  },
+  {
+    name: 'detail-page-reviewer',
+    description: 'Detail/entity page UX review',
+    mode: 'analysis',
+  },
+  {
+    name: 'navigation-reviewer',
+    description: 'Navigation and routing review',
+    mode: 'analysis',
+  },
+  {
+    name: 'form-reviewer',
+    description: 'Form and input UX review',
+    mode: 'analysis',
+  },
+  {
+    name: 'density-reviewer',
+    description: 'Data density and layout review',
     mode: 'analysis',
   },
 ] as const;

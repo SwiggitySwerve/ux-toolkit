@@ -333,3 +333,437 @@ function AnimatedComponent() {
   }
 }
 ```
+
+## Page Layout Patterns
+
+### Consistent Page Layout Component
+```tsx
+interface PageLayoutProps {
+  title: string;
+  subtitle?: string;
+  backLink?: string | { href: string; label: string };
+  headerContent?: React.ReactNode;  // Action buttons
+  maxWidth?: 'default' | 'narrow' | 'wide' | 'full';
+  children: React.ReactNode;
+}
+
+function PageLayout({ title, subtitle, backLink, headerContent, maxWidth = 'default', children }: PageLayoutProps) {
+  return (
+    <div className="min-h-screen bg-surface-deep p-6">
+      <div className={`mx-auto ${maxWidthClasses[maxWidth]}`}>
+        {/* Back navigation */}
+        {backLink && (
+          <Link href={typeof backLink === 'string' ? backLink : backLink.href}>
+            <span className="inline-flex items-center text-text-secondary hover:text-accent mb-6">
+              <ArrowLeftIcon className="w-4 h-4 mr-2" />
+              {typeof backLink === 'string' ? 'Back' : backLink.label}
+            </span>
+          </Link>
+        )}
+
+        {/* Header with title and actions */}
+        <div className="flex flex-wrap items-start justify-between gap-4 mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-white mb-2">{title}</h1>
+            {subtitle && <p className="text-text-secondary">{subtitle}</p>}
+          </div>
+          {headerContent}
+        </div>
+
+        {children}
+      </div>
+    </div>
+  );
+}
+```
+
+### Page States Components
+```tsx
+// Loading state
+function PageLoading({ message = 'Loading...' }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <Spinner className="w-12 h-12 mx-auto mb-4" />
+        <p className="text-text-secondary">{message}</p>
+      </div>
+    </div>
+  );
+}
+
+// Error state
+function PageError({ title, message, backLink, backLabel }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center p-8">
+      <div className="bg-red-900/20 border border-red-600/30 rounded-xl p-8 max-w-md text-center">
+        <h2 className="text-xl font-semibold text-red-400 mb-2">{title}</h2>
+        <p className="text-text-secondary mb-6">{message}</p>
+        {backLink && <Link href={backLink}>{backLabel}</Link>}
+      </div>
+    </div>
+  );
+}
+
+// Empty state
+function EmptyState({ icon, title, message, action }) {
+  return (
+    <div className="bg-surface-raised/30 rounded-lg p-8 text-center border border-dashed border-border">
+      {icon && <div className="mb-3">{icon}</div>}
+      <p className="font-medium">{title}</p>
+      {message && <p className="text-sm mt-1 text-text-secondary">{message}</p>}
+      {action && <div className="mt-4">{action}</div>}
+    </div>
+  );
+}
+```
+
+## Tab Navigation Patterns
+
+### URL-Synced Tabs
+```tsx
+type TabId = 'overview' | 'career' | 'settings';
+
+function TabbedPage() {
+  const router = useRouter();
+  const { id, tab: queryTab } = router.query;
+  const [activeTab, setActiveTab] = useState<TabId>('overview');
+
+  // Sync tab from URL
+  useEffect(() => {
+    if (queryTab && isValidTab(queryTab)) {
+      setActiveTab(queryTab as TabId);
+    }
+  }, [queryTab]);
+
+  // Update URL when tab changes (shallow routing)
+  const handleTabChange = useCallback((tab: TabId) => {
+    setActiveTab(tab);
+    const url = tab === 'overview' 
+      ? `/items/${id}` 
+      : `/items/${id}?tab=${tab}`;
+    router.replace(url, undefined, { shallow: true });
+  }, [id, router]);
+
+  return (
+    <div>
+      {/* Tab bar */}
+      <div className="flex gap-1 border-b border-border mb-6">
+        {['overview', 'career', 'settings'].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => handleTabChange(tab as TabId)}
+            className={`px-4 py-2.5 text-sm font-medium relative ${
+              activeTab === tab ? 'text-accent' : 'text-text-secondary hover:text-white'
+            }`}
+          >
+            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            {activeTab === tab && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent" />
+            )}
+          </button>
+        ))}
+      </div>
+
+      {/* Tab content */}
+      {activeTab === 'overview' && <OverviewTab />}
+      {activeTab === 'career' && <CareerTab />}
+      {activeTab === 'settings' && <SettingsTab />}
+    </div>
+  );
+}
+```
+
+### Multi-Unit Tab Manager (Complex)
+```tsx
+// For workspaces with multiple editable items (like an IDE)
+interface TabInfo {
+  id: string;
+  label: string;
+  isDirty: boolean;
+}
+
+function useTabManager() {
+  const [tabs, setTabs] = useState<TabInfo[]>([]);
+  const [activeTabId, setActiveTabId] = useState<string | null>(null);
+
+  const openTab = (id: string, label: string) => {
+    if (!tabs.find(t => t.id === id)) {
+      setTabs(prev => [...prev, { id, label, isDirty: false }]);
+    }
+    setActiveTabId(id);
+  };
+
+  const closeTab = (id: string) => {
+    const tab = tabs.find(t => t.id === id);
+    if (tab?.isDirty && !confirm('Unsaved changes. Close anyway?')) return;
+    
+    setTabs(prev => prev.filter(t => t.id !== id));
+    if (activeTabId === id) {
+      setActiveTabId(tabs[0]?.id || null);
+    }
+  };
+
+  return { tabs, activeTabId, openTab, closeTab, setActiveTabId };
+}
+```
+
+## Modal Patterns
+
+### Confirmation Modal with Loading
+```tsx
+interface DeleteConfirmModalProps {
+  itemName: string;
+  isOpen: boolean;
+  isDeleting: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+function DeleteConfirmModal({ itemName, isOpen, isDeleting, onConfirm, onCancel }: DeleteConfirmModalProps) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop - clicking closes (unless deleting) */}
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={!isDeleting ? onCancel : undefined}
+      />
+
+      {/* Modal content */}
+      <div className="relative bg-surface-base border border-border rounded-xl p-6 max-w-md w-full shadow-2xl">
+        <div className="text-center">
+          {/* Warning icon */}
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-900/30 flex items-center justify-center">
+            <WarningIcon className="w-8 h-8 text-red-400" />
+          </div>
+
+          <h3 className="text-xl font-bold text-white mb-2">Delete Item?</h3>
+          <p className="text-text-secondary mb-6">
+            Are you sure you want to permanently delete{' '}
+            <span className="text-accent font-semibold">{itemName}</span>?
+            This action cannot be undone.
+          </p>
+
+          <div className="flex items-center justify-center gap-3">
+            <Button variant="ghost" onClick={onCancel} disabled={isDeleting}>
+              Cancel
+            </Button>
+            <Button
+              variant="danger"
+              onClick={onConfirm}
+              isLoading={isDeleting}
+            >
+              Delete
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+### Edit Modal with Form Reset
+```tsx
+function EditModal({ item, isOpen, onSave, onCancel, isSaving }) {
+  const [formData, setFormData] = useState({ name: '', description: '' });
+
+  // Reset form when item changes
+  useEffect(() => {
+    if (item) {
+      setFormData({ name: item.name, description: item.description || '' });
+    }
+  }, [item]);
+
+  if (!isOpen) return null;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formData.name.trim()) {
+      onSave(formData);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/70" onClick={!isSaving ? onCancel : undefined} />
+      <div className="relative bg-surface-base rounded-xl p-6 max-w-md w-full">
+        <h3 className="text-xl font-bold mb-4">Edit Item</h3>
+        
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-1.5">Name *</label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+              className="w-full px-4 py-2.5 bg-surface-raised border border-border rounded-lg"
+              required
+              autoFocus
+            />
+          </div>
+
+          <div className="flex justify-end gap-3 pt-4">
+            <Button type="button" variant="ghost" onClick={onCancel} disabled={isSaving}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary" isLoading={isSaving}>
+              Save Changes
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+```
+
+## List Page Pattern
+
+### Standard List Page Structure
+```tsx
+function ListPage() {
+  const [items, setItems] = useState([]);
+  const [filters, setFilters] = useState({ search: '', status: '' });
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Filtered items (memoized)
+  const filteredItems = useMemo(() => {
+    return items.filter(item => {
+      if (filters.search && !item.name.toLowerCase().includes(filters.search.toLowerCase())) {
+        return false;
+      }
+      if (filters.status && item.status !== filters.status) {
+        return false;
+      }
+      return true;
+    });
+  }, [items, filters]);
+
+  if (isLoading) return <PageLoading message="Loading items..." />;
+
+  return (
+    <PageLayout
+      title="Items"
+      subtitle={`Manage your ${items.length} items`}
+      headerContent={
+        <Button variant="primary" onClick={handleCreate}>
+          <PlusIcon className="w-4 h-4 mr-2" />
+          Create Item
+        </Button>
+      }
+    >
+      {/* Filters Card */}
+      <Card className="mb-6">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex-1">
+            <Input
+              type="text"
+              placeholder="Search..."
+              value={filters.search}
+              onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
+            />
+          </div>
+          <Select
+            value={filters.status}
+            onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
+            options={statusOptions}
+          />
+        </div>
+
+        {/* Results count */}
+        <div className="mt-4 text-sm text-text-secondary">
+          Showing {filteredItems.length} of {items.length} items
+          {filters.search && <span className="text-accent ml-1">(filtered)</span>}
+        </div>
+      </Card>
+
+      {/* Items Grid or Table */}
+      {filteredItems.length === 0 ? (
+        <EmptyState
+          icon={<EmptyIcon />}
+          title={filters.search ? 'No items match your search' : 'No items yet'}
+          message={filters.search ? 'Try adjusting your filters' : 'Create your first item'}
+          action={!filters.search && <Button onClick={handleCreate}>Create Item</Button>}
+        />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredItems.map(item => (
+            <ItemCard key={item.id} item={item} onClick={() => handleClick(item)} />
+          ))}
+        </div>
+      )}
+    </PageLayout>
+  );
+}
+```
+
+## Detail Page Pattern
+
+### Standard Detail Page Structure
+```tsx
+function DetailPage() {
+  const router = useRouter();
+  const { id } = router.query;
+  
+  const [item, setItem] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  if (isLoading) return <PageLoading message="Loading..." />;
+  if (!item) return <PageError title="Not Found" message="Item not found" backLink="/items" />;
+
+  return (
+    <PageLayout
+      title={item.name}
+      subtitle={item.description}
+      backLink="/items"
+      backLabel="Back to Items"
+      headerContent={
+        <div className="flex items-center gap-3">
+          <Button variant="secondary" size="sm" onClick={() => setIsEditModalOpen(true)}>
+            <EditIcon className="w-4 h-4 mr-2" />
+            Edit
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsDeleteModalOpen(true)}
+            className="text-red-400 hover:bg-red-900/20"
+          >
+            <TrashIcon className="w-4 h-4 mr-2" />
+            Delete
+          </Button>
+        </div>
+      }
+    >
+      {/* Detail content - typically multi-column on desktop */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-1 space-y-6">
+          <InfoCard item={item} />
+          <StatsCard item={item} />
+        </div>
+        <div className="lg:col-span-2">
+          <MainContentCard item={item} />
+        </div>
+      </div>
+
+      {/* Modals */}
+      <DeleteConfirmModal
+        itemName={item.name}
+        isOpen={isDeleteModalOpen}
+        onConfirm={handleDelete}
+        onCancel={() => setIsDeleteModalOpen(false)}
+      />
+      <EditModal
+        item={item}
+        isOpen={isEditModalOpen}
+        onSave={handleSave}
+        onCancel={() => setIsEditModalOpen(false)}
+      />
+    </PageLayout>
+  );
+}
+```
