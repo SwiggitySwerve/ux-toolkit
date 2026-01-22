@@ -1,0 +1,71 @@
+{
+  "name": "ux-toolkit",
+  "version": "0.1.0",
+  "description": "AI-powered UI/UX review toolkit with skills, agents, and commands for OpenCode and other AI coding assistants",
+  "keywords": [
+    "ux",
+    "ui",
+    "accessibility",
+    "wcag",
+    "usability",
+    "heuristics",
+    "design-system",
+    "opencode",
+    "ai-agents",
+    "mcp"
+  ],
+  "homepage": "https://github.com/swiggityswerve/ux-toolkit#readme",
+  "bugs": {
+    "url": "https://github.com/swiggityswerve/ux-toolkit/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swiggityswerve/ux-toolkit.git"
+  },
+  "license": "MIT",
+  "author": "swiggityswerve",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./skills/*": "./skills/*",
+    "./agents/*": "./agents/*",
+    "./commands/*": "./commands/*"
+  },
+  "bin": {
+    "ux-toolkit": "./dist/cli.js"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "skills",
+    "agents",
+    "commands",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint .",
+    "prepublishOnly": "npm run build",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "eslint": "^9.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
