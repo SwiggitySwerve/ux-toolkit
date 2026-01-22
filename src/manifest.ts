@@ -93,6 +93,45 @@ export const SKILLS = [
     description: 'Side-by-side comparison, diff highlighting, multi-item comparison',
     category: 'editor',
   },
+  {
+    name: 'split-panel-patterns',
+    description: 'Resizable panels, dividers, collapsible sidebars, synchronized views',
+    category: 'editor',
+  },
+
+  // Game/Interactive Skills
+  {
+    name: 'canvas-grid-patterns',
+    description: 'Hex grids, tactical maps, pan/zoom, tokens, coordinate systems',
+    category: 'game',
+  },
+  {
+    name: 'turn-based-ui-patterns',
+    description: 'Phase banners, turn indicators, action bars, game state feedback',
+    category: 'game',
+  },
+  {
+    name: 'playback-replay-patterns',
+    description: 'VCR controls, timeline scrubbing, speed selection, replay viewers',
+    category: 'game',
+  },
+  {
+    name: 'status-visualization-patterns',
+    description: 'Health bars, progress meters, heat gauges, pip displays, stat blocks',
+    category: 'game',
+  },
+
+  // Data Display Skills
+  {
+    name: 'info-card-patterns',
+    description: 'Compact/standard/expanded cards, stat blocks, badges, entity displays',
+    category: 'data',
+  },
+  {
+    name: 'event-timeline-patterns',
+    description: 'Activity feeds, audit logs, chronological events, filtering, infinite scroll',
+    category: 'data',
+  },
 
   // Framework Skills
   {
