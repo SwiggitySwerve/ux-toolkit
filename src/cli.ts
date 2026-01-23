@@ -5,6 +5,7 @@ import { createInterface } from 'node:readline';
 import { install, uninstall, getStatus } from './installer.js';
 import { SKILLS, AGENTS, COMMANDS } from './manifest.js';
 import { getPlatformInfo, isOpenCodeInstalled, isClaudeInstalled, type InstallTarget } from './paths.js';
+import { safeJoin } from './utils.js';
 
 // Prompting utility
 async function prompt(question: string): Promise<string> {
@@ -394,18 +395,18 @@ async function main() {
       
       // Check platform detection
       const platformInfo = getPlatformInfo();
-      
+
+      // Import existsSync for directory checks
+      const { existsSync } = await import('node:fs');
+
       // OpenCode checks
       if (platformInfo.opencode.exists) {
         ok.push(`OpenCode detected at ${platformInfo.opencode.configDir}`);
-        
+
         // Check if skills/agents/commands directories exist
-        const { existsSync } = await import('node:fs');
-        const { join } = await import('node:path');
-        
-        const skillsDir = join(platformInfo.opencode.configDir, 'skills');
-        const agentsDir = join(platformInfo.opencode.configDir, 'agents');
-        const commandsDir = join(platformInfo.opencode.configDir, 'commands');
+        const skillsDir = safeJoin(platformInfo.opencode.configDir, 'skills');
+        const agentsDir = safeJoin(platformInfo.opencode.configDir, 'agents');
+        const commandsDir = safeJoin(platformInfo.opencode.configDir, 'commands');
         
         if (!existsSync(skillsDir)) {
           warnings.push('OpenCode skills directory missing');
@@ -423,13 +424,10 @@ async function main() {
       // Claude Code checks
       if (platformInfo.claude.exists) {
         ok.push(`Claude Code detected at ${platformInfo.claude.configDir}`);
-        
-        const { existsSync } = await import('node:fs');
-        const { join } = await import('node:path');
-        
-        const skillsDir = join(platformInfo.claude.configDir, 'skills');
-        const agentsDir = join(platformInfo.claude.configDir, 'agents');
-        const commandsDir = join(platformInfo.claude.configDir, 'commands');
+
+        const skillsDir = safeJoin(platformInfo.claude.configDir, 'skills');
+        const agentsDir = safeJoin(platformInfo.claude.configDir, 'agents');
+        const commandsDir = safeJoin(platformInfo.claude.configDir, 'commands');
         
         if (!existsSync(skillsDir)) {
           warnings.push('Claude Code skills directory missing');

@@ -7,6 +7,8 @@ export default defineConfig([
     dts: true,
     clean: true,
     sourcemap: true,
+    noExternal: ['@opencode-ai/plugin'],
+    shims: true,
   },
   {
     entry: ['src/cli.ts'],

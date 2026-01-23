@@ -1,7 +1,8 @@
 import { existsSync, mkdirSync, cpSync, readdirSync, rmSync, statSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { dirname } from 'node:path';
 import { getPackageRoot, getDestinationPaths, isOpenCodeInstalled, isClaudeInstalled, type InstallTarget } from './paths.js';
 import { SKILLS, AGENTS, COMMANDS } from './manifest.js';
+import { safeJoin } from './utils.js';
 
 export interface InstallOptions {
   /** Install globally to config directory */
@@ -68,7 +69,7 @@ export async function install(options: InstallOptions = {}): Promise<InstallResu
   };
 
   if (effectiveCategories.includes('skills')) {
-    const skillsDir = join(packageRoot, 'skills');
+    const skillsDir = safeJoin(packageRoot, 'skills');
     if (existsSync(skillsDir)) {
       let skills = readdirSync(skillsDir, { withFileTypes: true })
         .filter((d) => d.isDirectory())
@@ -81,8 +82,8 @@ export async function install(options: InstallOptions = {}): Promise<InstallResu
       }
 
       for (const skill of skills) {
-        const src = join(skillsDir, skill);
-        const dest = join(destinations.skills, skill);
+        const src = safeJoin(skillsDir, skill);
+        const dest = safeJoin(destinations.skills, skill);
 
         try {
           if (existsSync(dest) && !force) {
@@ -103,7 +104,7 @@ export async function install(options: InstallOptions = {}): Promise<InstallResu
   }
 
   if (effectiveCategories.includes('agents')) {
-    const agentsDir = join(packageRoot, 'agents');
+    const agentsDir = safeJoin(packageRoot, 'agents');
     if (existsSync(agentsDir)) {
       let agents = readdirSync(agentsDir)
         .filter((f) => f.endsWith('.md'))
@@ -116,8 +117,8 @@ export async function install(options: InstallOptions = {}): Promise<InstallResu
       }
 
       for (const agent of agents) {
-        const src = join(agentsDir, `${agent}.md`);
-        const dest = join(destinations.agents, `${agent}.md`);
+        const src = safeJoin(agentsDir, `${agent}.md`);
+        const dest = safeJoin(destinations.agents, `${agent}.md`);
 
         try {
           if (existsSync(dest) && !force) {
@@ -138,7 +139,7 @@ export async function install(options: InstallOptions = {}): Promise<InstallResu
   }
 
   if (effectiveCategories.includes('commands')) {
-    const commandsDir = join(packageRoot, 'commands');
+    const commandsDir = safeJoin(packageRoot, 'commands');
     if (existsSync(commandsDir)) {
       let commands = readdirSync(commandsDir)
         .filter((f) => f.endsWith('.md'))
@@ -151,8 +152,8 @@ export async function install(options: InstallOptions = {}): Promise<InstallResu
       }
 
       for (const command of commands) {
-        const src = join(commandsDir, `${command}.md`);
-        const dest = join(destinations.commands, `${command}.md`);
+        const src = safeJoin(commandsDir, `${command}.md`);
+        const dest = safeJoin(destinations.commands, `${command}.md`);
 
         try {
           if (existsSync(dest) && !force) {
@@ -245,17 +246,17 @@ function getTargetStatus(
   
   // Check skills
   const skillStatuses = SKILLS.map((s) => 
-    checkComponentStatus(join(destinations.skills, s.name), s.name)
+    checkComponentStatus(safeJoin(destinations.skills, s.name), s.name)
   );
   
   // Check agents
   const agentStatuses = AGENTS.map((a) =>
-    checkComponentStatus(join(destinations.agents, `${a.name}.md`), a.name)
+    checkComponentStatus(safeJoin(destinations.agents, `${a.name}.md`), a.name)
   );
   
   // Check commands
   const commandStatuses = COMMANDS.map((c) =>
-    checkComponentStatus(join(destinations.commands, `${c.name}.md`), c.name)
+    checkComponentStatus(safeJoin(destinations.commands, `${c.name}.md`), c.name)
   );
   
   return {
@@ -342,7 +343,7 @@ export async function uninstall(options: UninstallOptions = {}): Promise<Uninsta
 
   if (categories.includes('skills')) {
     for (const skill of ourSkills) {
-      const dest = join(destinations.skills, skill);
+      const dest = safeJoin(destinations.skills, skill);
 
       try {
         if (!existsSync(dest)) {
@@ -362,7 +363,7 @@ export async function uninstall(options: UninstallOptions = {}): Promise<Uninsta
 
   if (categories.includes('agents')) {
     for (const agent of ourAgents) {
-      const dest = join(destinations.agents, `${agent}.md`);
+      const dest = safeJoin(destinations.agents, `${agent}.md`);
 
       try {
         if (!existsSync(dest)) {
@@ -382,7 +383,7 @@ export async function uninstall(options: UninstallOptions = {}): Promise<Uninsta
 
   if (categories.includes('commands')) {
     for (const command of ourCommands) {
-      const dest = join(destinations.commands, `${command}.md`);
+      const dest = safeJoin(destinations.commands, `${command}.md`);
 
       try {
         if (!existsSync(dest)) {
