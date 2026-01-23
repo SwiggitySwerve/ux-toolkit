@@ -1,7 +1,8 @@
 import { homedir, platform } from 'node:os';
-import { join, dirname, resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { existsSync } from 'node:fs';
+import { safeJoin } from './utils.js';
 
 // Get the directory of the current module
 // Works in both ESM and CJS contexts
@@ -22,7 +23,7 @@ function getCurrentDirname(): string {
     // This works because package.json is always at the package root
     const packageJsonPath = require.resolve('ux-toolkit/package.json');
     // Return the dist directory (to match ESM behavior where import.meta.url points to dist/)
-    return join(dirname(packageJsonPath), 'dist');
+    return safeJoin(dirname(packageJsonPath), 'dist');
   } catch {
     // Package not found in node_modules
   }
@@ -52,19 +53,19 @@ function getCurrentDirname(): string {
 const currentDirname = getCurrentDirname();
 
 export function getPackageRoot(): string {
-  return join(currentDirname, '..');
+  return safeJoin(currentDirname, '..');
 }
 
 export function getSkillPath(skillName: string): string {
-  return join(getPackageRoot(), 'skills', skillName, 'SKILL.md');
+  return safeJoin(getPackageRoot(), 'skills', skillName, 'SKILL.md');
 }
 
 export function getAgentPath(agentName: string): string {
-  return join(getPackageRoot(), 'agents', `${agentName}.md`);
+  return safeJoin(getPackageRoot(), 'agents', `${agentName}.md`);
 }
 
 export function getCommandPath(commandName: string): string {
-  return join(getPackageRoot(), 'commands', `${commandName}.md`);
+  return safeJoin(getPackageRoot(), 'commands', `${commandName}.md`);
 }
 
 /**
@@ -94,11 +95,11 @@ export function getGlobalConfigDir(): string {
   
   // Linux: Respect XDG Base Directory spec
   if (currentPlatform === 'linux' && process.env.XDG_CONFIG_HOME) {
-    return join(process.env.XDG_CONFIG_HOME, 'opencode');
+    return safeJoin(process.env.XDG_CONFIG_HOME, 'opencode');
   }
   
   // All platforms default to ~/.config/opencode (matches OpenCode behavior)
-  return join(home, '.config', 'opencode');
+  return safeJoin(home, '.config', 'opencode');
 }
 
 /**
@@ -119,7 +120,7 @@ export function getClaudeConfigDir(): string {
     return resolve(process.env.CLAUDE_CONFIG_DIR);
   }
   
-  return join(homedir(), '.claude');
+  return safeJoin(homedir(), '.claude');
 }
 
 /**
@@ -161,7 +162,7 @@ export function getProjectConfigDir(projectRoot: string = process.cwd(), target:
   // Claude Code doesn't have project-level plugins in the same way
   // but we can support .claude/ directory for consistency
   const dirName = target === 'claude' ? '.claude' : '.opencode';
-  return join(projectRoot, dirName);
+  return safeJoin(projectRoot, dirName);
 }
 
 export interface DestinationPathsOptions {
@@ -180,8 +181,8 @@ export function getDestinationPaths(global: boolean, projectRoot?: string, targe
   }
 
   return {
-    skills: join(baseDir, 'skills'),
-    agents: join(baseDir, 'agents'),
-    commands: join(baseDir, 'commands'),
+    skills: safeJoin(baseDir, 'skills'),
+    agents: safeJoin(baseDir, 'agents'),
+    commands: safeJoin(baseDir, 'commands'),
   };
 }

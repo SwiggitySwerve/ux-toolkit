@@ -1,6 +1,6 @@
 {
   "name": "ux-toolkit",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "description": "AI-powered UI/UX review toolkit with skills, agents, and commands for OpenCode, Claude Code, and other AI coding assistants",
   "keywords": [
     "ux",
@@ -58,7 +58,16 @@
     "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=1.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@opencode-ai/plugin": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@opencode-ai/plugin": "^1.1.32",
     "@eslint/js": "^9.39.2",
     "@types/node": "^22.0.0",
     "eslint": "^9.0.0",
