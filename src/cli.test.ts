@@ -100,5 +100,113 @@ describe('CLI', () => {
       expect(stdout).toContain('--verbose');
       expect(stdout).toContain('-v');
     });
+
+    it('help should document --only flag', () => {
+      const { stdout } = runCli('--help');
+      expect(stdout).toContain('--only');
+    });
+  });
+
+  describe('uninstall command', () => {
+    it('help should document uninstall command', () => {
+      const { stdout } = runCli('--help');
+      expect(stdout).toContain('uninstall');
+    });
+  });
+
+  describe('upgrade command', () => {
+    it('help should document upgrade command', () => {
+      const { stdout } = runCli('--help');
+      expect(stdout).toContain('upgrade');
+    });
+  });
+
+  describe('info command', () => {
+    it('should show platform information', () => {
+      const { stdout, exitCode } = runCli('info');
+      expect(exitCode).toBe(0);
+      expect(stdout).toContain('Platform');
+      expect(stdout).toContain('OpenCode');
+      expect(stdout).toContain('Claude Code');
+      expect(stdout).toContain('Skills');
+      expect(stdout).toContain('Agents');
+      expect(stdout).toContain('Commands');
+    });
+  });
+
+  describe('target flags', () => {
+    it('help should document --opencode flag', () => {
+      const { stdout } = runCli('--help');
+      expect(stdout).toContain('--opencode');
+    });
+
+    it('help should document --claude flag', () => {
+      const { stdout } = runCli('--help');
+      expect(stdout).toContain('--claude');
+    });
+  });
+
+  describe('environment variables', () => {
+    it('help should document environment variables', () => {
+      const { stdout } = runCli('--help');
+      expect(stdout).toContain('UX_TOOLKIT_CONFIG_DIR');
+      expect(stdout).toContain('OPENCODE_CONFIG_DIR');
+      expect(stdout).toContain('XDG_CONFIG_HOME');
+    });
+  });
+
+  describe('status command', () => {
+    it('should show installation status', () => {
+      const { stdout, exitCode } = runCli('status');
+      expect(exitCode).toBe(0);
+      expect(stdout).toContain('Installation Status');
+      expect(stdout).toContain('OpenCode');
+      expect(stdout).toContain('Claude Code');
+      expect(stdout).toContain('Skills');
+      expect(stdout).toContain('Agents');
+      expect(stdout).toContain('Commands');
+    });
+
+    it('help should document status command', () => {
+      const { stdout } = runCli('--help');
+      expect(stdout).toContain('status');
+    });
+  });
+
+  describe('doctor command', () => {
+    it('should run diagnostics', () => {
+      const { stdout, exitCode } = runCli('doctor');
+      expect(exitCode).toBe(0);
+      expect(stdout).toContain('Diagnostics');
+      expect(stdout).toContain('Summary');
+    });
+
+    it('help should document doctor command', () => {
+      const { stdout } = runCli('--help');
+      expect(stdout).toContain('doctor');
+    });
+  });
+
+  describe('new options', () => {
+    it('help should document --all flag', () => {
+      const { stdout } = runCli('--help');
+      expect(stdout).toContain('--all');
+      expect(stdout).toContain('-a');
+    });
+
+    it('help should document --skill flag', () => {
+      const { stdout } = runCli('--help');
+      expect(stdout).toContain('--skill');
+    });
+
+    it('help should document --agent flag', () => {
+      const { stdout } = runCli('--help');
+      expect(stdout).toContain('--agent');
+    });
+
+    it('help should document --command flag', () => {
+      const { stdout } = runCli('--help');
+      expect(stdout).toContain('--command');
+    });
   });
 });

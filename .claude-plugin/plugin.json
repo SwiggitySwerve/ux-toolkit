@@ -1,0 +1,23 @@
+{
+  "name": "ux-toolkit",
+  "description": "AI-powered UI/UX review toolkit with 25 skills, 18 agents, and commands for comprehensive UX audits",
+  "version": "0.5.0",
+  "author": {
+    "name": "swiggityswerve",
+    "email": "swiggityswerve@users.noreply.github.com"
+  },
+  "homepage": "https://github.com/SwiggitySwerve/ux-toolkit",
+  "repository": "https://github.com/SwiggitySwerve/ux-toolkit",
+  "license": "MIT",
+  "keywords": [
+    "ux",
+    "ui",
+    "accessibility",
+    "wcag",
+    "usability",
+    "heuristics",
+    "design-system",
+    "skills",
+    "agents"
+  ]
+}

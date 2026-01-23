@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { join } from 'node:path';
 import {
   getPackageRoot,
@@ -6,14 +6,23 @@ import {
   getAgentPath,
   getCommandPath,
   getGlobalConfigDir,
+  getClaudeConfigDir,
   getProjectConfigDir,
   getDestinationPaths,
+  isOpenCodeInstalled,
+  isClaudeInstalled,
+  getPlatformInfo,
 } from './paths.js';
 
 const MOCK_HOME = '/mock/home';
 
 vi.mock('node:os', () => ({
   homedir: vi.fn(() => MOCK_HOME),
+  platform: vi.fn(() => 'linux'),
+}));
+
+vi.mock('node:fs', () => ({
+  existsSync: vi.fn(() => true),
 }));
 
 describe('paths', () => {
@@ -117,6 +126,113 @@ describe('paths', () => {
       
       expect(globalPaths.skills).not.toEqual(projectPaths.skills);
       expect(globalPaths.skills).toContain('.config');
+    });
+  });
+
+  describe('getGlobalConfigDir with environment variables', () => {
+    const originalEnv = process.env;
+
+    beforeEach(() => {
+      process.env = { ...originalEnv };
+    });
+
+    afterEach(() => {
+      process.env = originalEnv;
+    });
+
+    it('should respect UX_TOOLKIT_CONFIG_DIR override', () => {
+      process.env.UX_TOOLKIT_CONFIG_DIR = '/custom/config';
+      // Re-import to get fresh module with new env
+      const dir = getGlobalConfigDir();
+      // Note: The actual implementation resolves the path
+      expect(dir).toContain('custom');
+    });
+
+    it('should respect OPENCODE_CONFIG_DIR when UX_TOOLKIT_CONFIG_DIR not set', () => {
+      delete process.env.UX_TOOLKIT_CONFIG_DIR;
+      process.env.OPENCODE_CONFIG_DIR = '/opencode/config';
+      const dir = getGlobalConfigDir();
+      expect(dir).toContain('opencode');
+    });
+
+    it('should fallback to default when no env vars set', () => {
+      delete process.env.UX_TOOLKIT_CONFIG_DIR;
+      delete process.env.OPENCODE_CONFIG_DIR;
+      delete process.env.XDG_CONFIG_HOME;
+      const dir = getGlobalConfigDir();
+      expect(dir).toMatch(/[/\\]\.config[/\\]opencode$/);
+    });
+  });
+
+  describe('isOpenCodeInstalled', () => {
+    it('should return boolean', () => {
+      const result = isOpenCodeInstalled();
+      expect(typeof result).toBe('boolean');
+    });
+  });
+
+  describe('getClaudeConfigDir', () => {
+    const originalEnv = process.env;
+
+    beforeEach(() => {
+      process.env = { ...originalEnv };
+    });
+
+    afterEach(() => {
+      process.env = originalEnv;
+    });
+
+    it('should return path under home directory', () => {
+      delete process.env.CLAUDE_CONFIG_DIR;
+      const dir = getClaudeConfigDir();
+      expect(dir).toContain('.claude');
+    });
+
+    it('should respect CLAUDE_CONFIG_DIR override', () => {
+      process.env.CLAUDE_CONFIG_DIR = '/custom/claude';
+      const dir = getClaudeConfigDir();
+      expect(dir).toContain('custom');
+    });
+  });
+
+  describe('isClaudeInstalled', () => {
+    it('should return boolean', () => {
+      const result = isClaudeInstalled();
+      expect(typeof result).toBe('boolean');
+    });
+  });
+
+  describe('getDestinationPaths with target', () => {
+    it('should return opencode paths by default', () => {
+      const paths = getDestinationPaths(true);
+      expect(paths.skills).toContain('opencode');
+    });
+
+    it('should return claude paths when target is claude', () => {
+      const paths = getDestinationPaths(true, undefined, 'claude');
+      expect(paths.skills).toContain('.claude');
+    });
+  });
+
+  describe('getPlatformInfo', () => {
+    it('should return platform info object with opencode and claude info', () => {
+      const info = getPlatformInfo();
+      expect(info).toHaveProperty('platform');
+      expect(info).toHaveProperty('opencode');
+      expect(info).toHaveProperty('claude');
+      expect(typeof info.platform).toBe('string');
+      
+      // OpenCode info
+      expect(info.opencode).toHaveProperty('configDir');
+      expect(info.opencode).toHaveProperty('exists');
+      expect(typeof info.opencode.configDir).toBe('string');
+      expect(typeof info.opencode.exists).toBe('boolean');
+      
+      // Claude info
+      expect(info.claude).toHaveProperty('configDir');
+      expect(info.claude).toHaveProperty('exists');
+      expect(typeof info.claude.configDir).toBe('string');
+      expect(typeof info.claude.exists).toBe('boolean');
     });
   });
 });

@@ -1,0 +1,11 @@
+{
+  "name": "ux-toolkit-marketplace",
+  "description": "Official marketplace for UX Toolkit plugin",
+  "plugins": {
+    "ux-toolkit": {
+      "repository": "https://github.com/SwiggitySwerve/ux-toolkit",
+      "branch": "master",
+      "description": "AI-powered UI/UX review toolkit with skills, agents, and commands"
+    }
+  }
+}

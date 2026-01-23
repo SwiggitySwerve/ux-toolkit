@@ -1,7 +1,7 @@
 {
   "name": "ux-toolkit",
-  "version": "0.4.1",
-  "description": "AI-powered UI/UX review toolkit with skills, agents, and commands for OpenCode and other AI coding assistants",
+  "version": "0.5.0",
+  "description": "AI-powered UI/UX review toolkit with skills, agents, and commands for OpenCode, Claude Code, and other AI coding assistants",
   "keywords": [
     "ux",
     "ui",
@@ -11,6 +11,7 @@
     "heuristics",
     "design-system",
     "opencode",
+    "claude-code",
     "ai-agents",
     "mcp"
   ],
@@ -46,6 +47,7 @@
     "skills",
     "agents",
     "commands",
+    ".claude-plugin",
     "README.md"
   ],
   "scripts": {
