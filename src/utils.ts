@@ -32,7 +32,7 @@ export function safeJoin(...paths: unknown[]): string {
   } catch {
     // Fallback: manual join with path separator detection
     const sep = stringPaths[0].includes('\\') ? '\\' : '/';
-    return stringPaths.join(sep).replace(/[\/\\]+/g, sep);
+    return stringPaths.join(sep).replace(/[/\\]+/g, sep);
   }
 }
 
