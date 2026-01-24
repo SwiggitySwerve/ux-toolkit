@@ -1,7 +1,7 @@
 ---
 name: ux-auditor
 description: Full UX audit against heuristics and patterns (read-only analysis)
-mode: analysis
+mode: subagent
 skills:
   - ux-heuristics
   - page-structure-patterns

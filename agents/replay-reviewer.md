@@ -1,7 +1,7 @@
 ---
 name: replay-reviewer
 description: Specialized reviewer for playback/replay UIs and event timelines
-mode: analysis
+mode: subagent
 skills:
   - playback-replay-patterns
   - event-timeline-patterns

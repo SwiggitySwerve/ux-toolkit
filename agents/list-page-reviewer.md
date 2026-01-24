@@ -1,7 +1,7 @@
 ---
 name: list-page-reviewer
 description: Specialized reviewer for list/browse pages against list-page-patterns
-mode: analysis
+mode: subagent
 skills:
   - list-page-patterns
   - page-structure-patterns

@@ -1,7 +1,7 @@
 ---
 name: navigation-reviewer
 description: Specialized reviewer for navigation, sidebar, and routing patterns
-mode: analysis
+mode: subagent
 skills:
   - navigation-patterns
   - page-structure-patterns

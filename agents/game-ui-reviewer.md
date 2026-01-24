@@ -1,7 +1,7 @@
 ---
 name: game-ui-reviewer
 description: Specialized reviewer for game UIs with canvas/grid, turn-based mechanics, and status visualization
-mode: analysis
+mode: subagent
 skills:
   - canvas-grid-patterns
   - turn-based-ui-patterns

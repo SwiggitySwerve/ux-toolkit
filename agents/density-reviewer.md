@@ -1,7 +1,7 @@
 ---
 name: density-reviewer
 description: Specialized reviewer for data-dense UIs, overlap prevention, and information hierarchy
-mode: analysis
+mode: subagent
 skills:
   - data-density-patterns
   - visual-design-system

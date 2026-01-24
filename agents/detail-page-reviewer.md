@@ -1,7 +1,7 @@
 ---
 name: detail-page-reviewer
 description: Specialized reviewer for detail/view pages against detail-page-patterns
-mode: analysis
+mode: subagent
 skills:
   - detail-page-patterns
   - page-structure-patterns

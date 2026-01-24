@@ -1,7 +1,7 @@
 ---
 name: panel-reviewer
 description: Specialized reviewer for split panel layouts, resizable dividers, and multi-pane interfaces
-mode: analysis
+mode: subagent
 skills:
   - split-panel-patterns
   - data-density-patterns

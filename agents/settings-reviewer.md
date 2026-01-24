@@ -1,7 +1,7 @@
 ---
 name: settings-reviewer
 description: Specialized reviewer for settings, preferences, and configuration pages
-mode: analysis
+mode: subagent
 skills:
   - form-patterns
   - navigation-patterns
