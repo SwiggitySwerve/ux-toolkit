@@ -130,9 +130,9 @@ This installs to `.opencode/` in your current directory.
 | Command | Description |
 |---------|-------------|
 | `/ux-audit` | Comprehensive UX audit |
-| `/a11y-check` | Quick accessibility scan |
-| `/design-review` | Visual consistency check |
-| `/screenshot-review` | Visual review from screenshot |
+| `/ux-a11y-check` | Quick accessibility scan |
+| `/ux-design-review` | Visual consistency check |
+| `/ux-screenshot-review` | Visual review from screenshot |
 
 ## Usage Examples
 
@@ -143,7 +143,7 @@ This installs to `.opencode/` in your current directory.
 /ux-audit src/components/Button.tsx
 
 # Check accessibility
-/a11y-check src/pages/index.tsx
+/ux-a11y-check src/pages/index.tsx
 
 # Invoke agent directly
 @ux-auditor Review the login flow for usability issues
