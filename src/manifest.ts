@@ -247,15 +247,15 @@ export const COMMANDS = [
     description: 'Comprehensive UX audit',
   },
   {
-    name: 'a11y-check',
+    name: 'ux-a11y-check',
     description: 'Quick accessibility scan',
   },
   {
-    name: 'design-review',
+    name: 'ux-design-review',
     description: 'Visual consistency check',
   },
   {
-    name: 'screenshot-review',
+    name: 'ux-screenshot-review',
     description: 'Visual review from screenshot',
   },
 ] as const;

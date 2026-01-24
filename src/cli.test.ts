@@ -64,7 +64,7 @@ describe('CLI', () => {
       const { stdout } = runCli('list');
       expect(stdout).toContain('Commands:');
       expect(stdout).toContain('/ux-audit');
-      expect(stdout).toContain('/a11y-check');
+      expect(stdout).toContain('/ux-a11y-check');
     });
   });
 

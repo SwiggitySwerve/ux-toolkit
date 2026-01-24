@@ -120,9 +120,9 @@ describe('manifest', () => {
     it('should include expected commands', () => {
       const commandNames = COMMANDS.map((c) => c.name);
       expect(commandNames).toContain('ux-audit');
-      expect(commandNames).toContain('a11y-check');
-      expect(commandNames).toContain('design-review');
-      expect(commandNames).toContain('screenshot-review');
+      expect(commandNames).toContain('ux-a11y-check');
+      expect(commandNames).toContain('ux-design-review');
+      expect(commandNames).toContain('ux-screenshot-review');
     });
   });
 });
