@@ -1,7 +1,7 @@
 ---
 name: comparison-reviewer
 description: Specialized reviewer for side-by-side comparison and diff UIs
-mode: analysis
+mode: subagent
 skills:
   - comparison-patterns
   - data-density-patterns

@@ -1,7 +1,7 @@
 ---
 name: editor-reviewer
 description: Specialized reviewer for editor/workspace UIs with multi-tab, drag-drop, and real-time validation
-mode: analysis
+mode: subagent
 skills:
   - editor-workspace-patterns
   - drag-drop-patterns

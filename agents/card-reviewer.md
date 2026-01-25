@@ -1,7 +1,7 @@
 ---
 name: card-reviewer
 description: Specialized reviewer for info cards, entity displays, and stat blocks
-mode: analysis
+mode: subagent
 skills:
   - info-card-patterns
   - data-density-patterns

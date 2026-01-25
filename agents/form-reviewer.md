@@ -1,7 +1,7 @@
 ---
 name: form-reviewer
 description: Specialized reviewer for forms and data input patterns
-mode: analysis
+mode: subagent
 skills:
   - form-patterns
   - modal-patterns
