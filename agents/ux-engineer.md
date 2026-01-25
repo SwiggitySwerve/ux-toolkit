@@ -1,7 +1,7 @@
 ---
 name: ux-engineer
 description: UX analysis + implements fixes for identified issues
-mode: fix
+mode: subagent
 skills:
   - ux-heuristics
   - page-structure-patterns
